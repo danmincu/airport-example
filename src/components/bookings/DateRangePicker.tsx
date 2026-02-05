@@ -15,7 +15,7 @@ export function DateRangePicker() {
   };
 
   return (
-    <div className="flex items-end gap-4 mb-6">
+    <div className="flex flex-col sm:flex-row items-start sm:items-end gap-4 mb-6">
       <Input
         label="From"
         type="date"
@@ -28,7 +28,7 @@ export function DateRangePicker() {
         value={endDate}
         onChange={e => setEndDate(e.target.value)}
       />
-      <Button onClick={handleSearch}>Search</Button>
+      <Button variant="outline" onClick={handleSearch}>Search</Button>
     </div>
   );
 }

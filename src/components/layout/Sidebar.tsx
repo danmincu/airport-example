@@ -11,45 +11,75 @@ const menuItems = [
   { name: 'Finances', href: '/finances', icon: FinancesIcon },
 ];
 
-export function Sidebar() {
+interface SidebarProps {
+  isOpen?: boolean;
+  onClose?: () => void;
+}
+
+export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
   const pathname = usePathname();
 
   return (
-    <aside className="w-64 bg-sidebar min-h-screen flex flex-col">
-      <div className="p-6">
-        <h1 className="text-2xl font-bold text-amber-400">Amik Aviation</h1>
-        <p className="text-slate-400 text-sm">Seat Reservations</p>
-      </div>
+    <>
+      {/* Mobile overlay */}
+      {isOpen && onClose && (
+        <div
+          className="fixed inset-0 bg-slate-900/40 z-40 lg:hidden animate-fade-in"
+          onClick={onClose}
+        />
+      )}
 
-      <nav className="flex-1 px-4">
-        <ul className="space-y-2">
-          {menuItems.map(item => {
-            const isActive = pathname.startsWith(item.href);
-            return (
-              <li key={item.name}>
-                <Link
-                  href={item.href}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
-                    isActive
-                      ? 'bg-amber-400 text-slate-900'
-                      : 'text-slate-300 hover:bg-slate-800'
-                  }`}
-                >
-                  <item.icon className="w-5 h-5" />
-                  <span className="font-medium">{item.name}</span>
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-      </nav>
+      {/* Sidebar */}
+      <aside
+        className={`
+          w-60 bg-sidebar min-h-screen flex flex-col z-50
+          fixed lg:static inset-y-0 left-0
+          transform transition-transform duration-300 ease-in-out
+          ${isOpen ? 'translate-x-0' : '-translate-x-full'}
+          lg:translate-x-0
+        `}
+      >
+        <div className="p-6">
+          <h1 className="text-2xl font-bold text-white hover:text-amber-400 transition-colors duration-150">
+            Amik Aviation
+          </h1>
+          <p className="text-slate-400 text-caption mt-1">Seat Reservations</p>
+        </div>
 
-      <div className="p-4 border-t border-slate-700">
-        <p className="text-slate-500 text-xs text-center">
-          &copy; 2024 Amik Aviation
-        </p>
-      </div>
-    </aside>
+        <nav className="flex-1 px-4">
+          <ul className="space-y-1">
+            {menuItems.map(item => {
+              const isActive = pathname.startsWith(item.href);
+              return (
+                <li key={item.name}>
+                  <Link
+                    href={item.href}
+                    onClick={onClose}
+                    className={`
+                      flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-150
+                      ${
+                        isActive
+                          ? 'bg-transparent text-white border-l-2 border-amber-400 ml-0 pl-[14px]'
+                          : 'text-slate-200 hover:bg-slate-800/50 hover:text-white border-l-2 border-transparent ml-0 pl-[14px]'
+                      }
+                    `}
+                  >
+                    <item.icon className="w-5 h-5" />
+                    <span className="font-medium">{item.name}</span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+
+        <div className="p-4 border-t border-slate-700/50">
+          <p className="text-slate-500 text-caption text-center">
+            &copy; 2024 Amik Aviation
+          </p>
+        </div>
+      </aside>
+    </>
   );
 }
 

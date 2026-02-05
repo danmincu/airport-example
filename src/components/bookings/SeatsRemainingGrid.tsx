@@ -10,9 +10,9 @@ export function SeatsRemainingGrid() {
   const dates = getDatesInRange();
 
   return (
-    <div className="bg-white rounded-lg shadow overflow-hidden mb-8">
+    <div className="bg-white rounded-xl shadow-[var(--shadow-card)] overflow-hidden mb-8">
       <div className="p-4 border-b border-slate-200">
-        <h2 className="text-lg font-semibold text-slate-900">Seats Remaining</h2>
+        <h2 className="text-heading text-slate-900">Seats Remaining</h2>
       </div>
 
       <div className="overflow-x-auto">
@@ -30,13 +30,23 @@ export function SeatsRemainingGrid() {
                 return (
                   <th
                     key={date}
-                    className={`px-2 py-3 text-center min-w-[70px] cursor-pointer transition-colors ${
-                      today || isSelected ? 'bg-amber-400' : 'hover:bg-slate-100'
-                    }`}
+                    className={`
+                      px-2 py-3 text-center min-w-[70px] cursor-pointer transition-all duration-150
+                      ${isSelected ? 'bg-slate-100' : 'hover:bg-slate-100'}
+                    `}
                     onClick={() => selectDate(date)}
                   >
-                    <div className="text-xs text-slate-500">{display.day}</div>
-                    <div className={`text-sm font-medium ${today || isSelected ? 'text-slate-900' : 'text-slate-700'}`}>
+                    <div className={`text-caption ${today ? 'text-amber-600 font-medium' : 'text-slate-500'}`}>
+                      {display.day}
+                    </div>
+                    <div
+                      className={`
+                        text-sm font-medium inline-block px-1
+                        ${today ? 'text-slate-900 border-b-2 border-amber-400' : ''}
+                        ${isSelected && !today ? 'text-slate-900 border-b-2 border-slate-900' : ''}
+                        ${!today && !isSelected ? 'text-slate-700' : ''}
+                      `}
+                    >
                       {display.date}
                     </div>
                   </th>
@@ -46,10 +56,10 @@ export function SeatsRemainingGrid() {
           </thead>
           <tbody>
             {flights.map(flight => (
-              <tr key={flight.id} className="border-t border-slate-100">
+              <tr key={flight.id} className="border-t border-slate-100 hover:bg-slate-50/50 transition-colors duration-150">
                 <td className="px-4 py-3 text-sm text-slate-900 sticky left-0 bg-white">
                   <div className="font-medium">{flight.name}</div>
-                  <div className="text-slate-500 text-xs">{flight.departureTime}</div>
+                  <div className="text-slate-500 text-caption">{flight.departureTime}</div>
                 </td>
                 {dates.map(date => {
                   const availability = getAvailability(flight.id, date);
@@ -60,19 +70,24 @@ export function SeatsRemainingGrid() {
                   return (
                     <td
                       key={`${flight.id}-${date}`}
-                      className={`px-2 py-3 text-center cursor-pointer transition-colors ${
-                        isSelected ? 'bg-amber-100' : ''
-                      }`}
+                      className={`
+                        px-2 py-3 text-center cursor-pointer transition-all duration-150
+                        ${isSelected ? 'bg-slate-100' : ''}
+                      `}
                       onClick={() => selectDate(date)}
                     >
                       <span
-                        className={`inline-flex items-center justify-center w-8 h-8 rounded-full text-sm font-medium ${
-                          isFull
-                            ? 'bg-red-100 text-red-700'
-                            : isLow
-                            ? 'bg-emerald-400 text-white'
-                            : 'bg-slate-100 text-slate-700'
-                        }`}
+                        className={`
+                          inline-flex items-center justify-center w-8 h-8 rounded-full text-sm font-medium
+                          transition-all duration-150
+                          ${
+                            isFull
+                              ? 'bg-slate-200 text-slate-400'
+                              : isLow
+                              ? 'bg-amber-100 text-amber-700'
+                              : 'bg-slate-100 text-slate-700'
+                          }
+                        `}
                       >
                         {availability}
                       </span>

@@ -15,8 +15,22 @@ export function FlightDetailsSection() {
 
   if (!state.selectedDate) {
     return (
-      <div className="bg-white rounded-lg shadow p-8 text-center text-slate-500">
-        Select a date to view flight details.
+      <div className="bg-white rounded-xl shadow-[var(--shadow-card)] p-12 text-center">
+        <svg
+          className="w-16 h-16 text-slate-300 mx-auto mb-4"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={1.5}
+            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+          />
+        </svg>
+        <p className="text-body text-slate-500">Select a date to view flight details.</p>
+        <p className="text-caption text-slate-400 mt-1">Click on any date in the grid above.</p>
       </div>
     );
   }
@@ -38,7 +52,7 @@ export function FlightDetailsSection() {
 
   return (
     <div className="space-y-4">
-      <h2 className="text-lg font-semibold text-slate-900">
+      <h2 className="text-heading text-slate-900">
         Flight Details for {displayDate.day}, {displayDate.date}
       </h2>
 
@@ -48,15 +62,15 @@ export function FlightDetailsSection() {
         const isExpanded = expandedFlights.has(flight.id);
 
         return (
-          <div key={flight.id} className="bg-white rounded-lg shadow overflow-hidden">
+          <div key={flight.id} className="bg-white rounded-xl shadow-[var(--shadow-card)] overflow-hidden">
             <div
-              className="flex items-center justify-between px-4 py-3 bg-slate-50 cursor-pointer hover:bg-slate-100"
+              className="flex items-center justify-between px-4 py-4 bg-slate-50 cursor-pointer hover:bg-slate-100 transition-colors duration-150"
               onClick={() => toggleFlight(flight.id)}
             >
               <div className="flex items-center gap-4">
-                <button className="text-slate-400">
+                <button className="text-slate-400 hover:text-slate-600 transition-colors duration-150">
                   <svg
-                    className={`w-5 h-5 transition-transform ${isExpanded ? 'rotate-90' : ''}`}
+                    className={`w-5 h-5 transition-transform duration-200 ${isExpanded ? 'rotate-90' : ''}`}
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -66,17 +80,17 @@ export function FlightDetailsSection() {
                 </button>
                 <div>
                   <h3 className="font-medium text-slate-900">{flight.name}</h3>
-                  <p className="text-sm text-slate-500">
+                  <p className="text-caption text-slate-500">
                     {flight.departureTime} • {flight.route} • {flight.aircraftType}
                   </p>
                 </div>
               </div>
               <div className="flex items-center gap-4">
                 <div className="text-right">
-                  <p className="text-sm text-slate-600">
+                  <p className="text-body text-slate-600">
                     <span className="font-medium">{bookings.length}</span> / {flight.totalSeats} booked
                   </p>
-                  <p className={`text-sm ${availability <= 3 ? 'text-emerald-600 font-medium' : 'text-slate-500'}`}>
+                  <p className={`text-caption ${availability <= 3 && availability > 0 ? 'text-amber-600 font-medium' : availability === 0 ? 'text-slate-400' : 'text-slate-500'}`}>
                     {availability} seats remaining
                   </p>
                 </div>
@@ -94,7 +108,7 @@ export function FlightDetailsSection() {
             </div>
 
             {isExpanded && (
-              <div className="border-t border-slate-200">
+              <div className="border-t border-slate-200 animate-fade-in">
                 <PassengerTable bookings={bookings} />
               </div>
             )}

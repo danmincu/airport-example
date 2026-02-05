@@ -1,10 +1,58 @@
 @import "tailwindcss";
 
 :root {
+  /* Colors */
   --background: #f8fafc;
   --foreground: #0f172a;
-  --sidebar: #1e1e2d;
+  --sidebar: #1a1a2e;
   --accent: #f4c430;
+  --accent-hover: #e0b02c;
+
+  /* Surface & Border */
+  --surface: #ffffff;
+  --border: #e2e8f0;
+  --border-light: #f1f5f9;
+
+  /* Text */
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+
+  /* Semantic Colors */
+  --success: #22c55e;
+  --warning: #f4c430;
+  --error: #ef4444;
+
+  /* Typography Scale */
+  --font-display: 30px;
+  --font-heading: 20px;
+  --font-body: 14px;
+  --font-caption: 12px;
+  --font-micro: 11px;
+
+  /* Spacing Scale (8px base) */
+  --space-xs: 8px;
+  --space-sm: 16px;
+  --space-md: 24px;
+  --space-lg: 32px;
+  --space-xl: 48px;
+  --space-2xl: 64px;
+
+  /* Border Radius */
+  --radius-container: 12px;
+  --radius-interactive: 8px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-subtle: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-elevated: 0 4px 6px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.06);
+  --shadow-modal: 0 20px 25px rgba(0,0,0,0.15), 0 10px 10px rgba(0,0,0,0.04);
+
+  /* Transitions */
+  --transition-fast: 150ms ease-out;
+  --transition-normal: 200ms ease-in-out;
+  --transition-slow: 300ms ease-in-out;
 }
 
 @theme inline {
@@ -12,6 +60,7 @@
   --color-foreground: var(--foreground);
   --color-sidebar: var(--sidebar);
   --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -20,4 +69,79 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Utility classes for design system */
+.text-display {
+  font-size: var(--font-display);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.text-heading {
+  font-size: var(--font-heading);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.text-body {
+  font-size: var(--font-body);
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.text-caption {
+  font-size: var(--font-caption);
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.text-micro {
+  font-size: var(--font-micro);
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+/* Animation keyframes */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn var(--transition-normal) ease-out;
+}
+
+.animate-scale-in {
+  animation: scaleIn var(--transition-normal) ease-out;
+}
+
+.animate-slide-in {
+  animation: slideIn var(--transition-slow) ease-out;
 }

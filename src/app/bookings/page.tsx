@@ -8,7 +8,7 @@ import { FlightDetailsSection } from '@/components/bookings/FlightDetailsSection
 export default function BookingsPage() {
   return (
     <div>
-      <h1 className="text-2xl font-bold text-slate-900 mb-6">Bookings</h1>
+      <h1 className="text-display text-slate-900 mb-8">Bookings</h1>
       <DateRangePicker />
       <SeatsRemainingGrid />
       <FlightDetailsSection />
